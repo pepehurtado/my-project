@@ -3,10 +3,10 @@ import React from "react";
 import { CardBody, CardContainer, CardItem } from "./ui/3d-card";
 import SparklesPreview from "./SparklesPreview";
 
-export function ThreeDCardDemo() {
+export function ThreeDCardDemo({ name }: { name: string }) {
   return (
     <div className="sm:mt-10">
-      <SparklesPreview texto="Pepe Hurtado" />
+      <SparklesPreview texto={name} />
       <CardContainer className="inter-var -mt-32">
         <CardBody className="bg-gray-850 dark:bg-black hover:bg-violet-950 dark:hover:bg-gray-900 relative group/card dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] border-black/[0.1] w-72 sm:w-80 h-auto rounded-xl p-4 border">
           <CardItem translateZ="100" rotateX={20} rotateZ={-10} className="w-full mt-2">

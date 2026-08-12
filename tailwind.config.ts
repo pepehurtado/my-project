@@ -1,21 +1,23 @@
+import type { Config } from "tailwindcss";
+
 const svgToDataUri = require("mini-svg-data-uri");
 const {
   default: flattenColorPalette,
 } = require("tailwindcss/lib/util/flattenColorPalette");
 
-/** @type {import('tailwindcss').Config} */
-module.exports = {
-  content: [
-    "./app/**/*.{js,ts,jsx,tsx,mdx}",
-    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./components/**/*.{js,ts,jsx,tsx,mdx}",
- 
-    // Or if using `src` directory:
-    "./src/**/*.{js,ts,jsx,tsx,mdx}",
-  ],
+const config: Config = {
+  content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
   darkMode: "class",
   theme: {
     extend: {
+      fontFamily: {
+        mono: ["var(--font-mono)"],
+      },
+      colors: {
+        canvas: "#08090C",
+        surface: "#0A0B0F",
+      },
+      // Solo lo usa la versión interactiva.
       animation: {
         "meteor-effect": "meteor 5s linear infinite",
       },
@@ -30,8 +32,7 @@ module.exports = {
         },
       },
     },
- 
-},
+  },
   plugins: [
     addVariablesForColors,
     function ({ matchUtilities, theme }: any) {
@@ -48,14 +49,15 @@ module.exports = {
     },
   ],
 };
-// This plugin adds each Tailwind color as a global CSS variable, e.g. var(--gray-200).
+
+// Expone cada color de Tailwind como variable CSS global, p. ej. var(--gray-200).
 function addVariablesForColors({ addBase, theme }: any) {
-  let allColors = flattenColorPalette(theme("colors"));
-  let newVars = Object.fromEntries(
+  const allColors = flattenColorPalette(theme("colors"));
+  const newVars = Object.fromEntries(
     Object.entries(allColors).map(([key, val]) => [`--${key}`, val])
   );
- 
-  addBase({
-    ":root": newVars,
-  });
+
+  addBase({ ":root": newVars });
 }
+
+export default config;
